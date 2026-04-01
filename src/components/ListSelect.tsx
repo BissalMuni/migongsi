@@ -39,8 +39,8 @@ export default function ListSelect({
       .then((data: AddressOption[]) => {
         console.log("[ListSelect] data:", data, fetchUrl);
         setOptions(data);
-        // PC에서만 자동 선택 (모바일은 네이티브 드롭다운이므로 사용자가 직접 선택)
-        if (data.length === 1 && !value && window.innerWidth > 768) {
+        // 옵션이 1개면 PC/모바일 모두 자동 선택
+        if (data.length === 1 && !value) {
           onChange(data[0].value);
         }
       })
@@ -70,7 +70,7 @@ export default function ListSelect({
         className="list-select"
       >
         {loading && <option disabled>로딩중...</option>}
-        {!loading && isMobile && !value && options.length > 0 && (
+        {!loading && isMobile && !value && options.length > 1 && (
           <option value="">선택하세요</option>
         )}
         {options.map((opt) => (
