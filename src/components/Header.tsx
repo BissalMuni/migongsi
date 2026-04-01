@@ -69,6 +69,15 @@ export default function Header() {
           </a>
         </div>
       </div>
+
+      {/* Mobile links - 모바일에서만 표시 */}
+      <div className="mobile-header-links">
+        <a href="https://www.gangnam.go.kr/contents/local_tax/1/view.do?mid=ID02_010301" target="_blank" rel="noopener noreferrer">강남구청</a>
+        <span className="footer-divider">|</span>
+        <a href="https://www.reb.or.kr" target="_blank" rel="noopener noreferrer">한국부동산원</a>
+        <span className="footer-divider">|</span>
+        <a href="https://www.molit.go.kr" target="_blank" rel="noopener noreferrer">국토교통부</a>
+      </div>
     </header>
   );
 }
