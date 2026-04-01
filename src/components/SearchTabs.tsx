@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import RoadNameSearch from "./RoadNameSearch";
-import JibunSearch from "./JibunSearch";
 
 interface SearchTabsProps {
   onSearch: (params: Record<string, string>) => void;
@@ -12,19 +10,14 @@ interface SearchTabsProps {
 }
 
 export default function SearchTabs({ onSearch, authenticated, authDong, authHo }: SearchTabsProps) {
-  const [activeTab, setActiveTab] = useState<"road" | "jibun">("road");
-
   return (
     <div>
-      {/* Main tabs: 텍스트검색 / 지도검색 */}
+      {/* Main tabs */}
       <div className="main-tab-area">
-        <button className="main-tab active">텍스트검색</button>
-        <button className="main-tab" disabled>
-          지도검색
-        </button>
+        <button className="main-tab active">주소검색</button>
       </div>
 
-      {/* Search box (red box) */}
+      {/* Search box */}
       <div className="search-box">
         <div className="search-layout">
           {/* LEFT: illustration + text */}
@@ -90,36 +83,11 @@ export default function SearchTabs({ onSearch, authenticated, authDong, authHo }
             </svg>
           </div>
 
-          {/* RIGHT: sub-tabs + list boxes + search controls */}
+          {/* RIGHT: list boxes + search controls */}
           <div className="search-right-panel">
-            {/* Top bar: sub-tabs + help */}
-            <div className="search-top-bar">
-              <div className="search-sub-tabs">
-                <button
-                  onClick={() => setActiveTab("road")}
-                  className={`search-sub-tab${activeTab === "road" ? " active-sub" : ""}`}
-                >
-                  도로명 검색
-                </button>
-                <button
-                  onClick={() => setActiveTab("jibun")}
-                  className={`search-sub-tab${activeTab === "jibun" ? " active-sub" : ""}`}
-                >
-                  지번 검색
-                </button>
-              </div>
-              <button className="btn-road-help" type="button" disabled>
-                도로명 주소관 <span className="help-icon">?</span>
-              </button>
-            </div>
-
-            {/* Form content (blue box + orange box) */}
+            {/* Form content */}
             <div className="search-form-content">
-              {activeTab === "road" ? (
-                <RoadNameSearch onSearch={onSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
-              ) : (
-                <JibunSearch />
-              )}
+              <RoadNameSearch onSearch={onSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
             </div>
           </div>
         </div>
