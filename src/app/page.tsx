@@ -43,6 +43,7 @@ export default function Home() {
     const error = params.get("authError");
     if (error) {
       setAuthError(error);
+      sessionStorage.removeItem("pendingAuth");
       window.history.replaceState({}, "", "/");
       return;
     }
@@ -54,6 +55,7 @@ export default function Home() {
       setAuthenticated(true);
       setAuthDong(dong);
       setAuthHo(ho);
+      sessionStorage.removeItem("pendingAuth");
       window.history.replaceState({}, "", "/");
       // 인증 성공 후 바로 해당 동/호 검색
       const query = new URLSearchParams({ dong, ho, page: "1" }).toString();
@@ -63,6 +65,14 @@ export default function Home() {
         .then((data) => { setResults(data); setSearchParams({ dong, ho, page: "1" }); })
         .catch(() => setResults(null))
         .finally(() => setLoading(false));
+      return;
+    }
+
+    // pendingAuth가 있으면 인증 진행 중 (네이버에서 돌아오는 중)
+    const pending = sessionStorage.getItem("pendingAuth");
+    if (pending) {
+      // 아직 authSuccess 파라미터가 없으면 대기 상태
+      setLoading(true);
       return;
     }
 
@@ -179,7 +189,7 @@ export default function Home() {
           </div>
         )}
 
-        {!authenticated && (
+        {!authenticated && !loading && (
           <SearchTabs onSearch={handleSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
         )}
 

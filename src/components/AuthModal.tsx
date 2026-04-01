@@ -9,6 +9,8 @@ interface AuthModalProps {
 
 export default function AuthModal({ dong, ho, onClose }: AuthModalProps) {
   const handleNaverLogin = () => {
+    // 인증 진행 중 플래그 저장 (리다이렉트 후 복원용)
+    sessionStorage.setItem("pendingAuth", JSON.stringify({ dong, ho }));
     const params = new URLSearchParams({ dong, ho });
     window.location.href = `/api/auth/naver?${params}`;
   };
