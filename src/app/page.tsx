@@ -117,15 +117,6 @@ export default function Home() {
     <>
       {/* Title Box */}
       <div className="titlebox">
-        {/* Breadcrumb */}
-        <ul className="breadcrumb">
-          <li>HOME</li>
-          <li className="arrow">미공시 공동주택 공시가격열람</li>
-          <li className="arrow">
-            <strong>미공시 공동주택 공시가격 열람</strong>
-          </li>
-        </ul>
-
         {/* Title Area */}
         <div className="title-area">
           <div className="title-text">

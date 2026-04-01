@@ -352,6 +352,41 @@ body {
   padding-left: 40px;
 }
 
+/* ===================== TITLE BOX ===================== */
+.titlebox {
+  margin-bottom: 25px;
+}
+
+.title-area {
+  background: linear-gradient(135deg, #e8f0fb 0%, #f0f5fc 50%, #f8fafd 100%);
+  border-radius: 12px;
+  padding: 28px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dce6f5;
+}
+
+.title-text h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--header-blue);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.title-text .year-info {
+  font-size: 13px;
+  color: var(--text-gray);
+  margin-top: 6px;
+}
+
+.title-img {
+  width: 80px;
+  height: 80px;
+  opacity: 0.6;
+}
+
 /* ===================== MAIN TABS (텍스트검색 / 지도검색) ===================== */
 .main-tab-area {
   display: flex;
@@ -1041,6 +1076,13 @@ body {
     align-items: flex-start;
   }
 
+  .title-area {
+    padding: 20px;
+  }
+
+  .title-text h3 {
+    font-size: 18px;
+  }
 }
 
 /* Unpublished Notice */
@@ -1422,8 +1464,24 @@ body {
     padding: 16px 10px 30px;
   }
 
-  /* --- Breadcrumb --- */
-  .breadcrumb {
+  /* --- Title Area --- */
+  .titlebox {
+    margin-bottom: 10px;
+  }
+
+  .title-area {
+    padding: 14px;
+  }
+
+  .title-text h3 {
+    font-size: 16px;
+  }
+
+  .year-info {
+    font-size: 11px;
+  }
+
+  .title-img {
     display: none;
   }
 
