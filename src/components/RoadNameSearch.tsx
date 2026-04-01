@@ -234,6 +234,8 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
         <AuthModal
           dong={selectedDong}
           ho={selectedHo}
+          roadName={roadName}
+          name={selectedName}
           onClose={() => setShowAuthModal(false)}
         />
       )}

@@ -21,15 +21,19 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // state에서 dong/ho 추출
+  // state에서 dong/ho/roadName/name 추출
   let dong = "";
   let ho = "";
+  let roadName = "";
+  let unitName = "";
   try {
     const stateData = JSON.parse(
       Buffer.from(stateParam, "base64url").toString("utf8")
     );
     dong = stateData.dong || "";
     ho = stateData.ho || "";
+    roadName = stateData.roadName || "";
+    unitName = stateData.name || "";
   } catch {
     return NextResponse.redirect(
       `${baseUrl}?authError=${encodeURIComponent("잘못된 인증 상태입니다.")}`
@@ -102,9 +106,14 @@ export async function GET(request: NextRequest) {
       .update(ownerHash + Date.now().toString(), "utf8")
       .digest("hex");
 
-    const response = NextResponse.redirect(
-      `${baseUrl}?authSuccess=true&dong=${encodeURIComponent(dong)}&ho=${encodeURIComponent(ho)}`
-    );
+    const redirectParams = new URLSearchParams({
+      authSuccess: "true",
+      dong,
+      ho,
+      ...(roadName && { roadName }),
+      ...(unitName && { name: unitName }),
+    });
+    const response = NextResponse.redirect(`${baseUrl}?${redirectParams}`);
 
     response.cookies.set("auth_session", sessionToken, {
       httpOnly: true,

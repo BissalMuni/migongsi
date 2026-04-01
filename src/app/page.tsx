@@ -52,17 +52,22 @@ export default function Home() {
     if (success) {
       const dong = params.get("dong") || "";
       const ho = params.get("ho") || "";
+      const roadName = params.get("roadName") || "";
+      const name = params.get("name") || "";
       setAuthenticated(true);
       setAuthDong(dong);
       setAuthHo(ho);
       sessionStorage.removeItem("pendingAuth");
       window.history.replaceState({}, "", "/");
-      // 인증 성공 후 바로 해당 동/호 검색
-      const query = new URLSearchParams({ dong, ho, page: "1" }).toString();
+      // 인증 성공 후 바로 해당 동/호 검색 (단지명 포함)
+      const searchP: Record<string, string> = { dong, ho, page: "1" };
+      if (roadName) searchP.roadName = roadName;
+      if (name) searchP.name = name;
+      const query = new URLSearchParams(searchP).toString();
       setLoading(true);
       fetch(`/api/search?${query}`)
         .then((res) => res.json())
-        .then((data) => { setResults(data); setSearchParams({ dong, ho, page: "1" }); })
+        .then((data) => { setResults(data); setSearchParams(searchP); })
         .catch(() => setResults(null))
         .finally(() => setLoading(false));
       return;

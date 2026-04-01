@@ -4,6 +4,8 @@ import { randomBytes } from "crypto";
 export async function GET(request: NextRequest) {
   const dong = request.nextUrl.searchParams.get("dong") || "";
   const ho = request.nextUrl.searchParams.get("ho") || "";
+  const roadName = request.nextUrl.searchParams.get("roadName") || "";
+  const name = request.nextUrl.searchParams.get("name") || "";
   const clientId = process.env.NAVER_CLIENT_ID;
   if (!clientId) {
     return NextResponse.json(
@@ -15,8 +17,8 @@ export async function GET(request: NextRequest) {
   const state = randomBytes(16).toString("hex");
   const redirectUri = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001"}/api/auth/naver/callback`;
 
-  // state에 dong/ho 정보를 포함 (base64 인코딩)
-  const stateData = Buffer.from(JSON.stringify({ state, dong, ho })).toString("base64url");
+  // state에 dong/ho/roadName/name 정보를 포함 (base64 인코딩)
+  const stateData = Buffer.from(JSON.stringify({ state, dong, ho, roadName, name })).toString("base64url");
 
   const naverAuthUrl = new URL("https://nid.naver.com/oauth2.0/authorize");
   naverAuthUrl.searchParams.set("response_type", "code");

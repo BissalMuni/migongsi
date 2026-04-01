@@ -3,15 +3,18 @@
 interface AuthModalProps {
   dong: string;
   ho: string;
+  roadName?: string;
+  name?: string;
   onClose: () => void;
-  onAuthSuccess?: (dong: string, ho: string) => void;
 }
 
-export default function AuthModal({ dong, ho, onClose }: AuthModalProps) {
+export default function AuthModal({ dong, ho, roadName, name, onClose }: AuthModalProps) {
   const handleNaverLogin = () => {
-    // 인증 진행 중 플래그 저장 (리다이렉트 후 복원용)
-    sessionStorage.setItem("pendingAuth", JSON.stringify({ dong, ho }));
-    const params = new URLSearchParams({ dong, ho });
+    const data: Record<string, string> = { dong, ho };
+    if (roadName) data.roadName = roadName;
+    if (name) data.name = name;
+    sessionStorage.setItem("pendingAuth", JSON.stringify(data));
+    const params = new URLSearchParams(data);
     window.location.href = `/api/auth/naver?${params}`;
   };
 
@@ -32,7 +35,7 @@ export default function AuthModal({ dong, ho, onClose }: AuthModalProps) {
           </p>
           <div className="auth-info">
             <span>
-              선택된 주택: <strong>{dong}동 {ho}호</strong>
+              선택된 주택: <strong>{name ? `${name} ` : ""}{dong}동 {ho}호</strong>
             </span>
           </div>
           <div className="auth-buttons">
