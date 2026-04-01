@@ -9,5 +9,7 @@ export async function GET() {
   });
 
   const options = results.map((r) => ({ value: r.sido, label: r.sido }));
-  return NextResponse.json(options);
+  return NextResponse.json(options, {
+    headers: { "Cache-Control": "public, s-maxage=180, stale-while-revalidate=360" },
+  });
 }

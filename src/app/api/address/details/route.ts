@@ -49,5 +49,7 @@ export async function GET(request: NextRequest) {
     hos: hoRows.map((r) => r.ho).sort((a, b) =>
       a.localeCompare(b, "ko", { numeric: true })
     ),
+  }, {
+    headers: { "Cache-Control": "public, s-maxage=180, stale-while-revalidate=360" },
   });
 }

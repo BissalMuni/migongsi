@@ -15,5 +15,7 @@ export async function GET(request: NextRequest) {
   });
 
   const options = results.map((r) => ({ value: r.sigungu, label: r.sigungu }));
-  return NextResponse.json(options);
+  return NextResponse.json(options, {
+    headers: { "Cache-Control": "public, s-maxage=180, stale-while-revalidate=360" },
+  });
 }
