@@ -1427,4 +1427,21 @@ body {
   font-size: 13px;
   margin-bottom: 12px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-back {
+  background: #1a4899;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-back:hover {
+  background: #153a7a;
 }

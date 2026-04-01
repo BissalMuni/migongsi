@@ -191,6 +191,20 @@ export default function Home() {
         {authenticated && (
           <div className="auth-success-banner">
             본인인증 완료 ({authDong}동 {authHo}호)
+            <button
+              onClick={() => {
+                setAuthenticated(false);
+                setAuthDong("");
+                setAuthHo("");
+                setResults(null);
+                sessionStorage.removeItem("pendingAuth");
+                // 세션 쿠키 삭제
+                fetch("/api/auth/session", { method: "DELETE" }).catch(() => {});
+              }}
+              className="btn-back"
+            >
+              다시 검색
+            </button>
           </div>
         )}
 
