@@ -357,34 +357,6 @@ body {
   margin-bottom: 25px;
 }
 
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  font-size: 13px;
-  color: var(--text-gray);
-  margin-bottom: 15px;
-  list-style: none;
-  padding: 0;
-}
-
-.breadcrumb li {
-  display: flex;
-  align-items: center;
-}
-
-.breadcrumb li.arrow::before {
-  content: ">";
-  margin: 0 10px;
-  color: #bbb;
-  font-size: 11px;
-}
-
-.breadcrumb li strong {
-  color: #333;
-  font-weight: 600;
-}
-
 .title-area {
   background: linear-gradient(135deg, #e8f0fb 0%, #f0f5fc 50%, #f8fafd 100%);
   border-radius: 12px;
@@ -1444,4 +1416,246 @@ body {
 
 .btn-back:hover {
   background: #153a7a;
+}
+
+/* ===================== MOBILE (≤480px) ===================== */
+@media (max-width: 480px) {
+  /* --- Header --- */
+  .header-inner {
+    height: 56px;
+    padding: 0 12px;
+  }
+
+  .header-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-logo-text {
+    font-size: 14px;
+  }
+
+  .nav-wrap,
+  .side-logos {
+    display: none;
+  }
+
+  /* --- Sub Visual Banner --- */
+  .sub-visual-wrap {
+    height: 80px;
+  }
+
+  .sub-visual-wrap h2 {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Page Layout --- */
+  .sub-page-wrap-full {
+    padding: 16px 10px 30px;
+  }
+
+  /* --- Breadcrumb --- */
+  .breadcrumb {
+    display: none;
+  }
+
+  /* --- Title Area --- */
+  .titlebox {
+    margin-bottom: 10px;
+  }
+
+  .title-area {
+    padding: 14px;
+  }
+
+  .title-text h3 {
+    font-size: 16px;
+  }
+
+  .year-info {
+    font-size: 11px;
+  }
+
+  .title-img {
+    display: none;
+  }
+
+  /* --- Search Box --- */
+  .main-tab-area {
+    margin-bottom: 0;
+  }
+
+  .main-tab {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .search-layout {
+    flex-direction: column;
+  }
+
+  .search-left-panel {
+    display: none;
+  }
+
+  .search-right-panel {
+    padding: 10px;
+  }
+
+  /* --- Listbox Area (시/도, 시/군/구, 도로명) --- */
+  .listbox-area {
+    padding: 6px 8px 8px;
+  }
+
+  .listbox-headers {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .listbox-headers .listbox-header {
+    display: none;
+  }
+
+  .listbox-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .listbox-col.col-sido,
+  .listbox-col.col-sigungu,
+  .listbox-col.col-road {
+    width: 100%;
+  }
+
+  .listbox-col::before {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4890dc;
+    margin-bottom: 3px;
+  }
+
+  .listbox-col.col-sido::before {
+    content: "시/도 선택";
+  }
+
+  .listbox-col.col-sigungu::before {
+    content: "시/군/구 선택";
+  }
+
+  .listbox-col.col-road::before {
+    content: "도로명 선택";
+  }
+
+  .list-select {
+    height: 120px;
+  }
+
+  /* --- Filter Area (단지명/동/호) --- */
+  .filter-area {
+    padding: 10px;
+  }
+
+  .filter-area .listbox-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .filter-area .listbox-col {
+    flex: none !important;
+    width: 100%;
+  }
+
+  .filter-area .listbox-col::before {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4890dc;
+    margin-bottom: 3px;
+  }
+
+  .filter-area .listbox-col.col-name::before {
+    content: "단지명";
+  }
+
+  .filter-area .listbox-col.col-dong::before {
+    content: "동";
+  }
+
+  .filter-area .listbox-col.col-ho::before {
+    content: "호";
+  }
+
+  .filter-area .listbox-headers {
+    display: none;
+  }
+
+  .filter-area .list-select {
+    height: 100px;
+  }
+
+  /* --- Confirm Button --- */
+  .confirm-area {
+    margin-top: 12px;
+  }
+
+  .btn-confirm {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* --- Result Meta --- */
+  .result-meta {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  /* --- Result Table --- */
+  .result-info {
+    font-size: 12px;
+  }
+
+  .result-table {
+    font-size: 11px;
+  }
+
+  .result-table th,
+  .result-table td {
+    padding: 8px 4px;
+  }
+
+  /* --- Auth Banners --- */
+  .auth-error-banner,
+  .auth-success-banner {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .btn-back {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  /* --- Auth Modal --- */
+  .modal-content {
+    width: 95%;
+    max-width: 95%;
+  }
+
+  .modal-header {
+    padding: 12px 16px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .btn-naver {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
 }
