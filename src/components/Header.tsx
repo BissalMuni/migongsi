@@ -14,11 +14,7 @@ export default function Header() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <rect width="48" height="48" rx="8" fill="#1a4899" />
-              <path
-                d="M12 36V20l12-8 12 8v16H12z"
-                fill="white"
-                opacity="0.9"
-              />
+              <path d="M12 36V20l12-8 12 8v16H12z" fill="white" opacity="0.9" />
               <rect x="18" y="26" width="5" height="10" rx="1" fill="#1a4899" />
               <rect
                 x="26"
@@ -32,7 +28,7 @@ export default function Header() {
               <circle cx="24" cy="18" r="2" fill="#1a4899" />
             </svg>
             <span className="header-logo-text">
-              부동산 공시가격 <strong>알리미</strong>
+              미공시 부동산 <strong>주택가격 </strong>알리미
             </span>
           </Link>
         </h1>
@@ -42,7 +38,7 @@ export default function Header() {
           <ul className="nav-list">
             <li>
               <Link href="/" className="active">
-                공시가격열람
+                미공시 주택가격 열람
               </Link>
             </li>
           </ul>
@@ -51,11 +47,11 @@ export default function Header() {
         {/* Side Logos */}
         <div className="side-logos">
           <a
-            href="https://www.molit.go.kr"
+            href="https://www.gangnam.go.kr/contents/local_tax/1/view.do?mid=ID02_010301"
             target="_blank"
             rel="noopener noreferrer"
           >
-            국토교통부
+            강남구청
           </a>
           <a
             href="https://www.reb.or.kr"
@@ -63,6 +59,13 @@ export default function Header() {
             rel="noopener noreferrer"
           >
             한국부동산원
+          </a>
+          <a
+            href="https://www.molit.go.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            국토교통부
           </a>
         </div>
       </div>
