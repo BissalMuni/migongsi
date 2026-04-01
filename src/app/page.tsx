@@ -56,7 +56,13 @@ export default function Home() {
       setAuthHo(ho);
       window.history.replaceState({}, "", "/");
       // 인증 성공 후 바로 해당 동/호 검색
-      doSearch({ dong, ho, page: "1" });
+      const query = new URLSearchParams({ dong, ho, page: "1" }).toString();
+      setLoading(true);
+      fetch(`/api/search?${query}`)
+        .then((res) => res.json())
+        .then((data) => { setResults(data); setSearchParams({ dong, ho, page: "1" }); })
+        .catch(() => setResults(null))
+        .finally(() => setLoading(false));
       return;
     }
 
@@ -68,8 +74,13 @@ export default function Home() {
           setAuthenticated(true);
           setAuthDong(data.dong);
           setAuthHo(data.ho);
-          // 세션 복원 시에도 자동 검색
-          doSearch({ dong: data.dong, ho: data.ho, page: "1" });
+          const query = new URLSearchParams({ dong: data.dong, ho: data.ho, page: "1" }).toString();
+          setLoading(true);
+          fetch(`/api/search?${query}`)
+            .then((res) => res.json())
+            .then((d) => { setResults(d); setSearchParams({ dong: data.dong, ho: data.ho, page: "1" }); })
+            .catch(() => setResults(null))
+            .finally(() => setLoading(false));
         }
       })
       .catch(() => {});

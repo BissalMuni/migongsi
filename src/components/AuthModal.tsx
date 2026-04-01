@@ -4,6 +4,7 @@ interface AuthModalProps {
   dong: string;
   ho: string;
   onClose: () => void;
+  onAuthSuccess?: (dong: string, ho: string) => void;
 }
 
 export default function AuthModal({ dong, ho, onClose }: AuthModalProps) {

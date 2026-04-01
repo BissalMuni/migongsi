@@ -4,7 +4,6 @@ import { randomBytes } from "crypto";
 export async function GET(request: NextRequest) {
   const dong = request.nextUrl.searchParams.get("dong") || "";
   const ho = request.nextUrl.searchParams.get("ho") || "";
-
   const clientId = process.env.NAVER_CLIENT_ID;
   if (!clientId) {
     return NextResponse.json(
