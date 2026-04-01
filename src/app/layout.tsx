@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
   title: "부동산공시가격 알리미",
@@ -34,9 +33,8 @@ export default function RootLayout({
 
           {/* Sub Page */}
           <div className="sub-page-bg">
-            <div className="sub-page-wrap">
-              <Sidebar />
-              <div className="rightcolumn">{children}</div>
+            <div className="sub-page-wrap-full">
+              {children}
             </div>
           </div>
         </div>

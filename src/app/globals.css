@@ -205,6 +205,12 @@ body {
   align-items: flex-start;
 }
 
+.sub-page-wrap-full {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px 50px;
+}
+
 /* ===================== SIDEBAR ===================== */
 .side-nav-wrap {
   width: 260px;
