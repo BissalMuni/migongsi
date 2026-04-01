@@ -87,11 +87,11 @@ export async function GET(request: NextRequest) {
       .update(name.trim() + birthDate, "utf8")
       .digest("hex");
 
-    const owner = await prisma.owner.findUnique({
-      where: { dong_ho: { dong, ho } },
+    const housing = await prisma.housing.findFirst({
+      where: { dong, ho, ownerHash },
     });
 
-    if (!owner || owner.ownerHash !== ownerHash) {
+    if (!housing) {
       return NextResponse.redirect(
         `${baseUrl}?authError=${encodeURIComponent("해당 동/호의 소유자 정보와 일치하지 않습니다.")}`
       );
