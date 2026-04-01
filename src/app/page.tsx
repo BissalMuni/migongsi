@@ -49,10 +49,14 @@ export default function Home() {
 
     const success = params.get("authSuccess");
     if (success) {
+      const dong = params.get("dong") || "";
+      const ho = params.get("ho") || "";
       setAuthenticated(true);
-      setAuthDong(params.get("dong") || "");
-      setAuthHo(params.get("ho") || "");
+      setAuthDong(dong);
+      setAuthHo(ho);
       window.history.replaceState({}, "", "/");
+      // 인증 성공 후 바로 해당 동/호 검색
+      doSearch({ dong, ho, page: "1" });
       return;
     }
 
@@ -64,6 +68,8 @@ export default function Home() {
           setAuthenticated(true);
           setAuthDong(data.dong);
           setAuthHo(data.ho);
+          // 세션 복원 시에도 자동 검색
+          doSearch({ dong: data.dong, ho: data.ho, page: "1" });
         }
       })
       .catch(() => {});
