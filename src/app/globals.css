@@ -1495,7 +1495,12 @@ body {
   }
 
   .list-select {
-    height: 120px;
+    height: auto;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    -webkit-appearance: menulist;
+    appearance: menulist;
   }
 
   /* --- Filter Area (단지명/동/호) --- */
@@ -1538,7 +1543,9 @@ body {
   }
 
   .filter-area .list-select {
-    height: 100px;
+    height: auto;
+    -webkit-appearance: menulist;
+    appearance: menulist;
   }
 
   /* --- Confirm Button --- */
