@@ -168,7 +168,9 @@ export default function Home() {
           </div>
         )}
 
-        <SearchTabs onSearch={handleSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
+        {!authenticated && (
+          <SearchTabs onSearch={handleSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
+        )}
 
         {results && results.data.length > 0 && (
           <div className="result-meta">
