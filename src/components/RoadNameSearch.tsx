@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import ListSelect from "./ListSelect";
 import AuthModal from "./AuthModal";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface RoadNameSearchProps {
   onSearch: (params: Record<string, string>) => void;
@@ -18,6 +19,7 @@ interface DetailsResponse {
 }
 
 export default function RoadNameSearch({ onSearch, authenticated, authDong, authHo }: RoadNameSearchProps) {
+  const isMobile = useIsMobile();
   const [sido, setSido] = useState("");
   const [sigungu, setSigungu] = useState("");
   const [roadName, setRoadName] = useState("");
@@ -180,7 +182,7 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
           <div className="listbox-row">
             <div className="listbox-col col-name">
               <select
-                size={8}
+                size={isMobile ? undefined : 8}
                 value={selectedName}
                 onChange={(e) => handleNameChange(e.target.value)}
                 onClick={(e) => {
@@ -198,7 +200,7 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
             </div>
             <div className="listbox-col col-dong">
               <select
-                size={8}
+                size={isMobile ? undefined : 8}
                 value={selectedDong}
                 onChange={(e) => handleDongChange(e.target.value)}
                 onClick={(e) => {
@@ -216,7 +218,7 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
             </div>
             <div className="listbox-col col-ho">
               <select
-                size={8}
+                size={isMobile ? undefined : 8}
                 value={selectedHo}
                 onChange={(e) => setSelectedHo(e.target.value)}
                 onClick={(e) => {

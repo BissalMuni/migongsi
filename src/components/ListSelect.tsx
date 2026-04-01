@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AddressOption } from "@/types";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface ListSelectProps {
   label?: string;
@@ -18,6 +19,7 @@ export default function ListSelect({
   fetchUrl,
   disabled = false,
 }: ListSelectProps) {
+  const isMobile = useIsMobile();
   const [options, setOptions] = useState<AddressOption[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +56,7 @@ export default function ListSelect({
     <div className="list-select-wrap">
       {label && <p className="list-select-label">{label}</p>}
       <select
-        size={10}
+        size={isMobile ? undefined : 10}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onClick={(e) => {

@@ -1083,6 +1083,105 @@ body {
   .title-text h3 {
     font-size: 18px;
   }
+
+  /* --- Listbox Area (시/도, 시/군/구, 도로명) --- */
+  .listbox-area {
+    padding: 6px 8px 8px;
+  }
+
+  .listbox-headers {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .listbox-headers .listbox-header {
+    display: none;
+  }
+
+  .listbox-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .listbox-col.col-sido,
+  .listbox-col.col-sigungu,
+  .listbox-col.col-road {
+    width: 100%;
+  }
+
+  .listbox-col::before {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4890dc;
+    margin-bottom: 3px;
+  }
+
+  .listbox-col.col-sido::before {
+    content: "시/도 선택";
+  }
+
+  .listbox-col.col-sigungu::before {
+    content: "시/군/구 선택";
+  }
+
+  .listbox-col.col-road::before {
+    content: "도로명 선택";
+  }
+
+  .list-select {
+    height: auto;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    -webkit-appearance: menulist;
+    appearance: menulist;
+  }
+
+  /* --- Filter Area (단지명/동/호) --- */
+  .filter-area {
+    padding: 10px;
+  }
+
+  .filter-area .listbox-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .filter-area .listbox-col {
+    flex: none !important;
+    width: 100%;
+  }
+
+  .filter-area .listbox-col::before {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4890dc;
+    margin-bottom: 3px;
+  }
+
+  .filter-area .listbox-col.col-name::before {
+    content: "단지명";
+  }
+
+  .filter-area .listbox-col.col-dong::before {
+    content: "동";
+  }
+
+  .filter-area .listbox-col.col-ho::before {
+    content: "호";
+  }
+
+  .filter-area .listbox-headers {
+    display: none;
+  }
+
+  .filter-area .list-select {
+    height: auto;
+    -webkit-appearance: menulist;
+    appearance: menulist;
+  }
 }
 
 /* Unpublished Notice */
@@ -1505,105 +1604,6 @@ body {
 
   .search-right-panel {
     padding: 10px;
-  }
-
-  /* --- Listbox Area (시/도, 시/군/구, 도로명) --- */
-  .listbox-area {
-    padding: 6px 8px 8px;
-  }
-
-  .listbox-headers {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .listbox-headers .listbox-header {
-    display: none;
-  }
-
-  .listbox-row {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .listbox-col.col-sido,
-  .listbox-col.col-sigungu,
-  .listbox-col.col-road {
-    width: 100%;
-  }
-
-  .listbox-col::before {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: #4890dc;
-    margin-bottom: 3px;
-  }
-
-  .listbox-col.col-sido::before {
-    content: "시/도 선택";
-  }
-
-  .listbox-col.col-sigungu::before {
-    content: "시/군/구 선택";
-  }
-
-  .listbox-col.col-road::before {
-    content: "도로명 선택";
-  }
-
-  .list-select {
-    height: auto;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 6px;
-    -webkit-appearance: menulist;
-    appearance: menulist;
-  }
-
-  /* --- Filter Area (단지명/동/호) --- */
-  .filter-area {
-    padding: 10px;
-  }
-
-  .filter-area .listbox-row {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .filter-area .listbox-col {
-    flex: none !important;
-    width: 100%;
-  }
-
-  .filter-area .listbox-col::before {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: #4890dc;
-    margin-bottom: 3px;
-  }
-
-  .filter-area .listbox-col.col-name::before {
-    content: "단지명";
-  }
-
-  .filter-area .listbox-col.col-dong::before {
-    content: "동";
-  }
-
-  .filter-area .listbox-col.col-ho::before {
-    content: "호";
-  }
-
-  .filter-area .listbox-headers {
-    display: none;
-  }
-
-  .filter-area .list-select {
-    height: auto;
-    -webkit-appearance: menulist;
-    appearance: menulist;
   }
 
   /* --- Confirm Button --- */
