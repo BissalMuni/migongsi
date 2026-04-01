@@ -4,7 +4,6 @@ import pg from "pg";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
-  pool: pg.Pool | undefined;
 };
 
 function createPrismaClient() {
@@ -14,8 +13,7 @@ function createPrismaClient() {
     max: 5,
     idleTimeoutMillis: 60000,
   });
-  globalForPrisma.pool = pool;
-  const adapter = new PrismaPg({ pool });
+  const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }
 
