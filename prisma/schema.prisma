@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Housing {
+  id            Int      @id @default(autoincrement())
+  serialNo      Int
+  baseDate      String
+  sido          String
+  sigungu       String
+  eupmyeondong  String
+  detailAddress String
+  roadName      String?
+  name          String
+  dong          String
+  ho            String
+  area          Float
+  price         BigInt
+  ownerHash     String?  // SHA-256(이름+생년월일)
+  roadAddr      String?
+  jibunAddr     String?
+  zipNo         String?
+  createdAt     DateTime @default(now())
+
+  @@index([sido, sigungu, eupmyeondong])
+  @@index([name])
+  @@index([roadName])
+  @@index([ownerHash])
+}

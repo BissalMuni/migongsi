@@ -1,65 +1,192 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useCallback, useEffect } from "react";
+import SearchTabs from "@/components/SearchTabs";
+import ResultTable from "@/components/ResultTable";
+import Pagination from "@/components/Pagination";
+
+interface HousingRow {
+  id: number;
+  baseDate: string;
+  sido: string;
+  sigungu: string;
+  eupmyeondong: string;
+  detailAddress: string;
+  name: string;
+  dong: string;
+  ho: string;
+  area: number;
+  price: string;
+  createdAt: string;
+}
+
+interface SearchResponse {
+  data: HousingRow[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
 
 export default function Home() {
+  const [results, setResults] = useState<SearchResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useState<Record<string, string>>({});
+  const [authenticated, setAuthenticated] = useState(false);
+  const [authDong, setAuthDong] = useState("");
+  const [authHo, setAuthHo] = useState("");
+  const [authError, setAuthError] = useState("");
+
+  // URL 파라미터에서 인증 결과 처리 + 세션 확인
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get("authError");
+    if (error) {
+      setAuthError(error);
+      window.history.replaceState({}, "", "/");
+      return;
+    }
+
+    const success = params.get("authSuccess");
+    if (success) {
+      setAuthenticated(true);
+      setAuthDong(params.get("dong") || "");
+      setAuthHo(params.get("ho") || "");
+      window.history.replaceState({}, "", "/");
+      return;
+    }
+
+    // 기존 세션 확인
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.authenticated) {
+          setAuthenticated(true);
+          setAuthDong(data.dong);
+          setAuthHo(data.ho);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const doSearch = useCallback(async (params: Record<string, string>) => {
+    setLoading(true);
+    setSearchParams(params);
+    try {
+      const query = new URLSearchParams(params).toString();
+      const res = await fetch(`/api/search?${query}`);
+      const data: SearchResponse = await res.json();
+      setResults(data);
+    } catch {
+      setResults(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleSearch = useCallback(
+    (params: Record<string, string>) => {
+      doSearch(params);
+    },
+    [doSearch]
+  );
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      doSearch({ ...searchParams, page: String(page) });
+    },
+    [doSearch, searchParams]
+  );
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* Title Box */}
+      <div className="titlebox">
+        {/* Breadcrumb */}
+        <ul className="breadcrumb">
+          <li>HOME</li>
+          <li className="arrow">미공시 공동주택 공시가격열람</li>
+          <li className="arrow">
+            <strong>미공시 공동주택 공시가격 열람</strong>
+          </li>
+        </ul>
+
+        {/* Title Area */}
+        <div className="title-area">
+          <div className="title-text">
+            <h3>미공시 공동주택가격 열람</h3>
+            <p className="year-info">2026년도 1.1 기준 공동주택가격(안)</p>
+          </div>
+          <svg
+            className="title-img"
+            viewBox="0 0 80 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="10" y="25" width="25" height="35" rx="2" fill="#1a4899" opacity="0.15" />
+            <rect x="40" y="15" width="30" height="45" rx="2" fill="#1a4899" opacity="0.2" />
+            <rect x="15" y="32" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="23" y="32" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="15" y="40" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="23" y="40" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="15" y="48" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="23" y="48" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="46" y="22" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="54" y="22" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="62" y="22" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="46" y="30" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="54" y="30" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="62" y="30" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="46" y="38" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="54" y="38" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="62" y="38" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="46" y="46" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="54" y="46" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+            <rect x="62" y="46" width="5" height="5" rx="0.5" fill="#1a4899" opacity="0.3" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="content">
+        {authError && (
+          <div className="auth-error-banner">
+            {authError}
+            <button onClick={() => setAuthError("")} className="ml-3">&times;</button>
+          </div>
+        )}
+
+        {authenticated && (
+          <div className="auth-success-banner">
+            본인인증 완료 ({authDong}동 {authHo}호)
+          </div>
+        )}
+
+        <SearchTabs onSearch={handleSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
+
+        {results && results.data.length > 0 && (
+          <div className="result-meta">
+            <span className="result-meta-item">2026년 1.1기준 공동주택가격(안)</span>
+            <span className="result-meta-item">
+              열람지역 : <strong>{results.data[0].sido} {results.data[0].sigungu} {results.data[0].detailAddress}({results.data[0].sigungu} {results.data[0].eupmyeondong})</strong>
+            </span>
+          </div>
+        )}
+
+        <ResultTable
+          data={results?.data || []}
+          total={results?.total || 0}
+          loading={loading}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {results && results.totalPages > 1 && (
+          <Pagination
+            currentPage={results.page}
+            totalPages={results.totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </div>
+    </>
   );
 }

@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# docker claude
+Dockerfile.claude
+docker-compose.claude.yml
+.claude-output/
+
+# pnpm store (Docker 컨테이너에서 로컬 생성)
+.pnpm-store/
+
+# database
+dev.db
+prisma/dev.db
+prisma/dev.db-journal
+
+/src/generated/prisma
