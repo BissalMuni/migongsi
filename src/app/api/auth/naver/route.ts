@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "crypto";
+import { BASE_URL } from "@/lib/config";
 
 export async function GET(request: NextRequest) {
   const dong = request.nextUrl.searchParams.get("dong") || "";
@@ -15,7 +16,7 @@ export async function GET(request: NextRequest) {
   }
 
   const state = randomBytes(16).toString("hex");
-  const redirectUri = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001"}/api/auth/naver/callback`;
+  const redirectUri = `${BASE_URL}/api/auth/naver/callback`;
 
   // state에 dong/ho/roadName/name 정보를 포함 (base64 인코딩)
   const stateData = Buffer.from(JSON.stringify({ state, dong, ho, roadName, name })).toString("base64url");

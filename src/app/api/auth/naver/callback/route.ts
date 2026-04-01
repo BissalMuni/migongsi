@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createHash } from "crypto";
 import { prisma } from "@/lib/prisma";
+import { BASE_URL } from "@/lib/config";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
   const stateParam = request.nextUrl.searchParams.get("state");
   const error = request.nextUrl.searchParams.get("error");
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
+  const baseUrl = BASE_URL;
 
   if (error) {
     return NextResponse.redirect(

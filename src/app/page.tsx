@@ -37,6 +37,28 @@ export default function Home() {
   const [authHo, setAuthHo] = useState("");
   const [authError, setAuthError] = useState("");
 
+  const doSearch = useCallback(async (params: Record<string, string>) => {
+    setLoading(true);
+    setSearchParams(params);
+    try {
+      const query = new URLSearchParams(params).toString();
+      const res = await fetch(`/api/search?${query}`);
+      const data: SearchResponse = await res.json();
+      setResults(data);
+    } catch {
+      setResults(null);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      doSearch({ ...searchParams, page: String(page) });
+    },
+    [doSearch, searchParams]
+  );
+
   // URL 파라미터에서 인증 결과 처리 + 세션 확인
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -59,26 +81,22 @@ export default function Home() {
       setAuthHo(ho);
       sessionStorage.removeItem("pendingAuth");
       window.history.replaceState({}, "", "/");
-      // 인증 성공 후 바로 해당 동/호 검색 (단지명 포함)
       const searchP: Record<string, string> = { dong, ho, page: "1" };
       if (roadName) searchP.roadName = roadName;
       if (name) searchP.name = name;
-      const query = new URLSearchParams(searchP).toString();
-      setLoading(true);
-      fetch(`/api/search?${query}`)
-        .then((res) => res.json())
-        .then((data) => { setResults(data); setSearchParams(searchP); })
-        .catch(() => setResults(null))
-        .finally(() => setLoading(false));
+      doSearch(searchP);
       return;
     }
 
-    // pendingAuth가 있으면 인증 진행 중 (네이버에서 돌아오는 중)
+    // pendingAuth가 있으면 인증 진행 중 — 5초 후 만료 처리
     const pending = sessionStorage.getItem("pendingAuth");
     if (pending) {
-      // 아직 authSuccess 파라미터가 없으면 대기 상태
       setLoading(true);
-      return;
+      const timer = setTimeout(() => {
+        sessionStorage.removeItem("pendingAuth");
+        setLoading(false);
+      }, 5000);
+      return () => clearTimeout(timer);
     }
 
     // 기존 세션 확인
@@ -89,46 +107,11 @@ export default function Home() {
           setAuthenticated(true);
           setAuthDong(data.dong);
           setAuthHo(data.ho);
-          const query = new URLSearchParams({ dong: data.dong, ho: data.ho, page: "1" }).toString();
-          setLoading(true);
-          fetch(`/api/search?${query}`)
-            .then((res) => res.json())
-            .then((d) => { setResults(d); setSearchParams({ dong: data.dong, ho: data.ho, page: "1" }); })
-            .catch(() => setResults(null))
-            .finally(() => setLoading(false));
+          doSearch({ dong: data.dong, ho: data.ho, page: "1" });
         }
       })
       .catch(() => {});
-  }, []);
-
-  const doSearch = useCallback(async (params: Record<string, string>) => {
-    setLoading(true);
-    setSearchParams(params);
-    try {
-      const query = new URLSearchParams(params).toString();
-      const res = await fetch(`/api/search?${query}`);
-      const data: SearchResponse = await res.json();
-      setResults(data);
-    } catch {
-      setResults(null);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const handleSearch = useCallback(
-    (params: Record<string, string>) => {
-      doSearch(params);
-    },
-    [doSearch]
-  );
-
-  const handlePageChange = useCallback(
-    (page: number) => {
-      doSearch({ ...searchParams, page: String(page) });
-    },
-    [doSearch, searchParams]
-  );
+  }, [doSearch]);
 
   return (
     <>
@@ -209,7 +192,7 @@ export default function Home() {
         )}
 
         {!authenticated && !loading && (
-          <SearchTabs onSearch={handleSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
+          <SearchTabs onSearch={doSearch} authenticated={authenticated} authDong={authDong} authHo={authHo} />
         )}
 
         {results && results.data.length > 0 && (
