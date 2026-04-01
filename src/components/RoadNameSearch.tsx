@@ -44,6 +44,18 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
           setDongs(data.dongs);
           setHos(data.hos);
           setLoaded(true);
+          // 자동 선택: 단지명 1개면 자동 선택
+          if (!name && data.names.length === 1) {
+            setSelectedName(data.names[0]);
+          }
+          // 동 1개면 자동 선택
+          if (data.dongs.length === 1) {
+            setSelectedDong(data.dongs[0]);
+          }
+          // 호 1개면 자동 선택
+          if (data.hos.length === 1) {
+            setSelectedHo(data.hos[0]);
+          }
         })
         .catch(() => {});
     },
