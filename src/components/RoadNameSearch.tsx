@@ -191,6 +191,9 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
                 }}
                 className="list-select"
               >
+                {isMobile && !selectedName && names.length > 0 && (
+                  <option value="">선택하세요</option>
+                )}
                 {names.map((n) => (
                   <option key={n} value={n}>
                     {n}
@@ -209,6 +212,9 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
                 }}
                 className="list-select"
               >
+                {isMobile && !selectedDong && dongs.length > 0 && (
+                  <option value="">선택하세요</option>
+                )}
                 {dongs.map((d) => (
                   <option key={d} value={d}>
                     {d || "동명없음"}
@@ -227,6 +233,9 @@ export default function RoadNameSearch({ onSearch, authenticated, authDong, auth
                 }}
                 className="list-select"
               >
+                {isMobile && !selectedHo && hos.length > 0 && (
+                  <option value="">선택하세요</option>
+                )}
                 {hos.map((h) => (
                   <option key={h} value={h}>
                     {h}
